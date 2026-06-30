@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head(title='CarDekho - Something went wrong')}"></head>
+<body>
+
+<div th:replace="~{layout/base :: header}"></div>
+
+<main class="container error-page">
+    <h1>Something went wrong</h1>
+    <p class="error-status" th:if="${status != null}" th:text="'Error ' + ${status}">Error</p>
+    <p class="error-message" th:if="${message != null and !#strings.isEmpty(message)}" th:text="${message}">
+        An unexpected error occurred.
+    </p>
+    <a href="/" class="btn-primary">Back to search</a>
+</main>
+
+<div th:replace="~{layout/base :: footer}"></div>
+
+</body>
+</html>

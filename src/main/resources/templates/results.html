@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head(title='CarDekho - Your Recommendations')}"></head>
+<body>
+
+<div th:replace="~{layout/base :: header}"></div>
+
+<main class="container">
+
+    <section class="results-header">
+        <h1>Your shortlist</h1>
+        <p>Here's what our AI consultant picked for you, ranked best match first.</p>
+        <a href="/" class="btn-secondary">Refine Search</a>
+    </section>
+
+    <p class="empty-state" th:if="${#lists.isEmpty(recommendations)}">
+        We couldn't find a confident match this time. Try widening your budget or removing a preference, then search again.
+    </p>
+
+    <div class="results-grid" th:unless="${#lists.isEmpty(recommendations)}">
+        <article class="car-card" th:each="rec : ${recommendations}">
+
+            <div class="car-card-header">
+                <span class="rank-badge" th:text="'#' + ${rec.rankOrder}">#1</span>
+                <span class="match-score" th:if="${rec.matchScore != null}" th:text="${rec.matchScore} + '% match'">90% match</span>
+            </div>
+
+            <h2 class="car-title" th:text="${rec.car.make} + ' ' + ${rec.car.model} + ' ' + ${rec.car.variant}">Car name</h2>
+            <p class="car-price" th:text="'₹' + ${rec.car.priceLakh} + ' Lakh'">&#8377;0 Lakh</p>
+
+            <ul class="car-specs">
+                <li th:text="${rec.car.fuelType}">Fuel</li>
+                <li th:text="${rec.car.transmission}">Transmission</li>
+                <li th:text="${rec.car.seatingCapacity} + ' seats'">Seats</li>
+                <li th:text="${rec.car.mileageKmpl} + ' km/l'">Mileage</li>
+                <li th:text="${rec.car.safetyRating} + '★ safety'">Safety</li>
+            </ul>
+
+            <p class="car-features" th:if="${rec.car.keyFeatures != null}" th:text="${rec.car.keyFeatures}">Key features</p>
+
+            <div class="car-reason">
+                <h3>Why this fits you</h3>
+                <p th:text="${rec.geminiReason}">Reason</p>
+            </div>
+
+            <div class="car-tradeoff" th:if="${rec.tradeOffNote != null}">
+                <h3>Trade-off</h3>
+                <p th:text="${rec.tradeOffNote}">Trade-off</p>
+            </div>
+
+        </article>
+    </div>
+
+</main>
+
+<div th:replace="~{layout/base :: footer}"></div>
+
+</body>
+</html>

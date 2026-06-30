@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">CarDekho</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header th:fragment="header" class="site-header">
+    <div class="container header-inner">
+        <a href="/" class="brand">CarDekho<span class="brand-accent">.ai</span></a>
+        <p class="tagline">AI-powered car recommendations</p>
+    </div>
+</header>
+
+<footer th:fragment="footer" class="site-footer">
+    <div class="container">
+        <p>&copy; 2026 CarDekho. Recommendations are AI-generated &mdash; please verify details with the dealership before buying.</p>
+    </div>
+</footer>
+
+</body>
+</html>

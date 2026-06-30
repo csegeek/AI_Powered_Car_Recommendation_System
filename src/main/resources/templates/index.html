@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head(title='CarDekho - Find Your Car')}"></head>
+<body>
+
+<div th:replace="~{layout/base :: header}"></div>
+
+<main class="container">
+
+    <section class="intro">
+        <h1>Tell us what you need, we'll find your car</h1>
+        <p>Answer a few quick questions and our AI consultant will shortlist the best matches for you.</p>
+    </section>
+
+    <form class="intake-form" th:action="@{/recommend}" th:object="${intakeForm}" method="post">
+
+        <div class="form-row">
+            <div class="form-field">
+                <label for="budgetMinLakh">Minimum budget (&#8377; lakh) *</label>
+                <input type="number" step="0.1" min="0" id="budgetMinLakh" th:field="*{budgetMinLakh}">
+                <p class="field-error" th:if="${#fields.hasErrors('budgetMinLakh')}" th:errors="*{budgetMinLakh}"></p>
+            </div>
+            <div class="form-field">
+                <label for="budgetMaxLakh">Maximum budget (&#8377; lakh) *</label>
+                <input type="number" step="0.1" min="0" id="budgetMaxLakh" th:field="*{budgetMaxLakh}">
+                <p class="field-error" th:if="${#fields.hasErrors('budgetMaxLakh')}" th:errors="*{budgetMaxLakh}"></p>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-field">
+                <label for="fuelTypePref">Fuel type</label>
+                <select id="fuelTypePref" th:field="*{fuelTypePref}">
+                    <option value="">No preference</option>
+                    <option th:each="option : ${fuelTypes}" th:value="${option}" th:text="${option}"></option>
+                </select>
+            </div>
+            <div class="form-field">
+                <label for="bodyTypePref">Body type</label>
+                <select id="bodyTypePref" th:field="*{bodyTypePref}">
+                    <option value="">No preference</option>
+                    <option th:each="option : ${bodyTypes}" th:value="${option}" th:text="${option}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-field">
+                <label for="transmissionPref">Transmission</label>
+                <select id="transmissionPref" th:field="*{transmissionPref}">
+                    <option value="">No preference</option>
+                    <option th:each="option : ${transmissions}" th:value="${option}" th:text="${option}"></option>
+                </select>
+            </div>
+            <div class="form-field">
+                <label for="seatingRequired">Minimum seating</label>
+                <select id="seatingRequired" th:field="*{seatingRequired}">
+                    <option value="">No preference</option>
+                    <option th:each="n : ${#numbers.sequence(2, 9)}" th:value="${n}" th:text="${n}"></option>
+                </select>
+                <p class="field-error" th:if="${#fields.hasErrors('seatingRequired')}" th:errors="*{seatingRequired}"></p>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-field">
+                <label for="primaryUsePref">Primary use</label>
+                <select id="primaryUsePref" th:field="*{primaryUsePref}">
+                    <option value="">No preference</option>
+                    <option th:each="option : ${primaryUses}" th:value="${option}" th:text="${option}"></option>
+                </select>
+            </div>
+            <div class="form-field">
+                <label for="mustHaveFeatures">Must-have features</label>
+                <input type="text" id="mustHaveFeatures" placeholder="e.g. sunroof, ADAS, wireless charger" th:field="*{mustHaveFeatures}">
+            </div>
+        </div>
+
+        <div class="form-field">
+            <label for="additionalNotes">Anything else we should know?</label>
+            <textarea id="additionalNotes" rows="4" placeholder="e.g. I drive mostly alone in heavy city traffic and care a lot about resale value" th:field="*{additionalNotes}"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary">Get my recommendations</button>
+    </form>
+
+</main>
+
+<div th:replace="~{layout/base :: footer}"></div>
+
+</body>
+</html>
